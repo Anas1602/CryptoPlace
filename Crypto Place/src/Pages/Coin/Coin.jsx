@@ -30,20 +30,13 @@ const Coin = () => {
     } catch (err) {
       setError("Failed to fetch coin data: " + err.message);
       console.error("Failed to fetch coin data:", err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const fetchHistoricalData = async () => {
     try {
-      const options = {
-        method: "GET",
-        headers: { accept: "application/json" },
-      };
       const response = await fetch(
-        `https://pro-api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=30`,
-        options
+        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=30`
       );
 
       if (!response.ok) {
@@ -55,6 +48,8 @@ const Coin = () => {
     } catch (error) {
       console.error("Error fetching historical data:", error);
       setError("Error fetching historical data: " + error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
