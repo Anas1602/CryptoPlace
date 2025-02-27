@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import "./Coin.css";
 import { useParams } from "react-router-dom";
@@ -36,7 +37,7 @@ const Coin = () => {
   const fetchHistoricalData = async () => {
     try {
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=30`
+        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=30&interval=daily`
       );
 
       if (!response.ok) {
@@ -91,6 +92,44 @@ const Coin = () => {
       </div>
       <div className="coin-chart">
         <LineChart historicalData={historicalData} />
+      </div>
+      <div className="coin-info">
+        <ul>
+          <li>Crypto Market Rank</li>
+          <li> {coinData.market_cap_rank} </li>
+        </ul>
+        <ul>
+          <li>Price</li>
+          <li>
+            {" "}
+            {currency.symbol}{" "}
+            {coinData.market_data.current_price[currency.name].toLocaleString()}{" "}
+          </li>
+        </ul>
+        <ul>
+          <li>Market Cap</li>
+          <li>
+            {" "}
+            {currency.symbol}{" "}
+            {coinData.market_data.market_cap[currency.name].toLocaleString()}{" "}
+          </li>
+        </ul>
+        <ul>
+          <li>24h High</li>
+          <li>
+            {" "}
+            {currency.symbol}{" "}
+            {coinData.market_data.high_24h[currency.name].toLocaleString()}{" "}
+          </li>
+        </ul>
+        <ul>
+          <li>24h Low</li>
+          <li>
+            {" "}
+            {currency.symbol}{" "}
+            {coinData.market_data.low_24h[currency.name].toLocaleString()}{" "}
+          </li>
+        </ul>
       </div>
     </div>
   );
